@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <!--# META #-->   
+    <title>Achievements</title>
+
+    <!--# SCRIPT #-->   
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+
+    <!--# CSS #-->   
+    <link rel="stylesheet" href="global.css" />
+    <link rel="stylesheet" href="css/menuStyles.css" />
+    <link rel="stylesheet" href="css/circleMeterBar.css" />
+    <link href="https://fonts.googleapis.com/css?family=Rakkas" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Jockey+One" rel="stylesheet">
+
+
+<!-- Moje skrypty ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <!--# Obsługa zapytań do baz #-->
+    <script src="skrypty/odpytywanieBaz/przeslij_zapytanie.js"></script>
+    <script src="skrypty/odpytywanieBaz/przetwarzanie_zapytania.js"></script>
+    <script src="skrypty/odpytywanieBaz/odbierz_zapytanie.js"></script>
+
+    <!--# Moduły i Controllery #-->
+    <script src="skrypty/Angular/controllersAdditionalScripts.js"></script>
+    <script src="skrypty/Angular/reward_module.js"></script>
+    <script src="skrypty/Angular/menu_module.js"></script>
+
+    <script src="api.js"></script>
+
+</head>
+<body>
+
+    <!-- testowe style-->
+    <style>
+        @keyframes opacityTransition{
+            from{
+                opacity:0;
+            }
+            to{
+                opacity:1;
+            }
+        }
+
+        .animuj{
+            opacity:0px;
+            animation:4s opacityTransition;
+        }
+
+        /*div[data-ng-animate="1"]{
+            opacity:0;
+        }*/
+         
+    </style>
+
+
+    <!-- obsługa wyników-->
+    <div ng-app="osluga_wynikow" class="pageHolder">
+        <section ng-controller="grupy_kategorii as grupy_kategorii" style="display:none;">
+            <ul class="lista_grup_kategorii">
+
+                <li ng-repeat="elementy in grupy_kategorii.tablica_informacji_o_grupie|orderBy:'-grupy_kategorii.tablica_informacji_o_grupie.order' track by $index">
+                    <span data-id="{{grupy_kategorii.tablica_informacji_o_grupie[$index].categories}}"><b>Nazwa:</b>{{grupy_kategorii.tablica_informacji_o_grupie[$index].name}}</span>
+                </li>
+            </ul>
+
+        </section>
+
+        <!-- Filtorwanie i sorting - controll panel-->
+
+        <section class="left_panel" style="display:none;">
+            <section class="">
+
+            </section>
+
+        </section>
+
+        <section class="centerPanel">
+
+            <!-- MENU górne ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <header class="upperMenu" ng-controller="FilterMenu as rare">
+                <ul>
+                    <li class="achievementAmountMenu" id="achievementAmountMenu"><span>Liczba Achievementów - ▼</span>
+                        <ul class="subMenu">
+                            <li>
+                                <form ng-submit="rare.getAchievementAmount($event)" name="ileAchievementForm">
+                                    <input type="range" min="1" max="50" value="3" name="rangeSlide" onchange="valueChangeShow(this.value)" id="valueApAmount" /> 
+                                        <span id="valueHolderApAmount">3</span>
+                                    <input type="submit" value="Ok" />
+                                </form>
+                            </li>
+                            <li></li>
+                        </ul>
+                    </li>
+                    <li class="rarityItemsMenu" id="rarityItemsMenu"><span>Item rarity - ▼</span>
+                        <ul class="subMenu">
+                            <li>        <span style="color:white;" ng-click="rare.getRarity($event)">Show All</span></li>
+                            <li>        <span style="color:darkviolet;" ng-click="rare.getRarity($event)">Ascended</span></li>
+                            <li>        <span style="color:orange;" ng-click="rare.getRarity($event)">Exotic</span></li>
+                            <li>        <span style="color:yellow;" ng-click="rare.getRarity($event)">Rare</span></li>
+                            <li>        <span style="color:lightgreen;" ng-click="rare.getRarity($event)">Masterwork</span></li>
+                            <li>        <span style="color:blue;" ng-click="rare.getRarity($event)">Fine</span></li>
+                            <li>        <span style="color:white;" ng-click="rare.getRarity($event)">Normal</span></li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+  
+                <ul class="tolltipMenu" id="tolltipMenu">
+                    <li style="background-color:rgb(222,158,41);" class="miniBox"><section class="miniBox-info"><span class="boxIcon">🕐</span><span id="load_time"></span>  </section></li>
+                </ul>
+
+            </header>
+
+            <header ng-controller="sortMenu as sort">
+                <style>
+                    .sortMenu {
+                    }
+
+                        .sortMenu > li {
+                            display: block !important;
+                            margin-left: 0px !important;
+                        }
+
+                            .sortMenu > li > form > label {
+                                width: 50px;
+                                display: inline-block;
+                            }
+                    .sortDesc{
+                        list-style-type:none;
+
+                    }
+                    .sortDesc>li{
+                        display:inline;
+                    }
+                </style>
+                <ul class="sortMenu" style="">
+                    <li>
+                        <ul class="sortDesc">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <form name="percentAllSort" ng-model="sort.sortRules(m_percentDoneAll,m_percentDone)" >
+                            <label for=" percentdoneall">% cały</label>
+                            <input type="checkbox" name="percentDoneAll" ng-model="m_percentDoneAll" />
+                            <input type="radio" name="percentDone" value='{"sortBy":"percentDoneAll", "sortOrder":"ASC"}' ng-model="m_percentDone" />
+                            <input type="radio" name="percentDone" value='{"sortBy":"percentDoneAll", "sortOrder":"DESC"}' ng-model="m_percentDone" />
+                        </form>
+                     <!--ng-model="sort.sortRules(m_percentDoneAll,m_percentDone)"-->
+                    <!--ng-click="sort.sortRules(m_percentDoneAll,m_percentDone)" -->
+                    </li>
+
+                    <li>
+                        <form name="percentDoneTierSort" ng-model="sort.sortRules(m_percentDoneTierCheckbox,m_percentDoneTier)">
+                            <label for="percentDoneTier">% tier</label>
+                            <input type="checkbox" name="percentDoneTier" ng-model="m_percentDoneTierCheckbox" />
+                            <input type="radio" name="percentDoneTier" value='{"sortBy":"percentDoneTier", "sortOrder":"ASC"}' ng-model="m_percentDoneTier" />
+                            <input type="radio" name="percentDoneTier" value='{"sortBy":"percentDoneTier", "sortOrder":"DESC"}' ng-model="m_percentDoneTier" />
+                        </form>
+                    </li>
+
+                    <li>
+                        <form name="apGainSort" ng-model="sort.sortRules(achievementSortChecbox,m_achievementSort)">
+                            <label for="achievementSort">AP</label>
+                            <input type="checkbox" name="achievementSort" ng-model="achievementSortChecbox" />
+                            <input type="radio" name="achievementSort" value='{"sortBy":"achievementSort", "sortOrder":"ASC"}' ng-model="m_achievementSort" />
+                            <input type="radio" name="achievementSort" value='{"sortBy":"achievementSort", "sortOrder":"DESC"}' ng-model="m_achievementSort" />
+                        </form>
+                   </li>
+                </ul>
+                {{sortAchievements}}
+            </header>
+
+
+
+            <section ng-controller="achievementy_na_koncie as achievementy_na_koncie" class="all_achievements" ng-init="sortAchievements='max/current'">
+
+                <!-- obsługa achievementów na koncie ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+                <div ng-repeat="achievements in achievementy_na_koncie.lista_achievementow|orderBy:sortAchievements|limitTo:filterLiczbaAP track by achievements.id" 
+                     ng-controller="pobierz_informacje_achievementow as achievement_info" 
+                     class="singleAchievementSection" 
+                     ng-show="achievement_info.show_controll(achievement_info.item_reward_szczegoly.rarity)">
+
+                    <div class="wrapper single_achievement animuj">
+
+                        <div class="AchievementMoreHiddenInfo">
+                            <img src="img/icons/questionCircle.png" id="smallInfoButon" onmouseover="mouseoverAchievementInfo(this)" onmouseout="    mouseoutAchievementInfo(this)" style="margin:0 auto" />
+                            <div>
+                                <b>ID:</b> {{achievements.id}}
+                            </div>
+                        </div>
+
+                        <div class="AchievementCategoryIcon">
+
+                        </div>
+
+                        <div class="AchievementName">{{achievement_info.szczegoly_achievmentu.nazwa}}<div class="lineSeparator"></div></div>
+                        <div class="AchievementEntireProggress">{{achievements.current}} / {{achievements.max}}</div>
+
+
+
+                        <div class="c100 p{{achievement_info.proggres_array.id}}" id="{{achievement_info.szczegoly_achievmentu.nazwa}}" onmouseover="showMoreInfo(this.id)" onmouseout="hideMoreInfo(this.id)">
+                            <div class="rightInfoPercent">{{achievement_info.proggres_array.id}}%</div>
+
+                            <span><img ng-src="{{achievementy_na_koncie.getImg(achievements.id)}}"></span>
+                            <div class="slice">
+                                <div class="bar"></div>
+                                <div class="fill"></div>
+                            </div>
+                        </div>
+
+
+                        <div>&nbsp;</div>
+                        <div class="AchievementCurrenTierPercent">
+
+                            <div id="meter_holder">
+                                <span>{{achievement_info.proggresObecnegoTiera}}%</span>
+  
+                                <meter min="0" max="100" value="{{achievement_info.proggresObecnegoTiera}}"></meter>
+                                <span class="AchievementTiersProggress">{{achievement_info.obecnyTier}} / {{achievement_info.szczegoly_achievmentu.tiers.length}}</span>
+                            </div>
+                        </div>
+
+                        <div class="AchievementPoints"><img class="smallIconInfo" src="https://wiki.guildwars2.com/images/thumb/6/6b/Arenanet_Points.png/20px-Arenanet_Points.png" /> {{achievement_info.apNaTierze}}</div>
+
+                        <div class="AchievementReward">
+                            <div id="reward_holder" data-attached-achievement="{{achievement_info.szczegoly_achievmentu.nazwa}}">
+                                <span id="item_name" ng-style='itemRarityColor' data-item-quality="{{achievement_info.item_reward_szczegoly.rarity}}"><img src="https://wiki.guildwars2.com/images/thumb/2/25/Title_icon.png/20px-Title_icon.png" ng-show="achievement_info.item_reward_szczegoly.typ=='title'" /> {{achievement_info.item_reward_szczegoly.name}}</span>
+                                <img ng-src="{{achievement_info.item_reward_szczegoly.icon}}" id="item_icon_holder" ng-show="achievement_info.item_reward_szczegoly.typ=='item'" />
+
+                                <div class="moreInfoAchievement">
+                                    "{{achievement_info.szczegoly_achievmentu.description}}"</br>
+                                    <span class="requirement">{{achievement_info.szczegoly_achievmentu.requirement}}</span>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </section>
+
+</section>
+
+
+
+
+            <!-- TEST ZONE-->
+
+
+            <section style="width:800px;margin:auto;background-color:brown;">
+                <article ng-controller="testable__aa as testable"></article>
+            </section>
+
+            <script>
+
+            </script>
+
+</div>
+
+
+
+    <!-- Interfejs -->
+    <script src="interface.js"></script>
+</body>
+</html>

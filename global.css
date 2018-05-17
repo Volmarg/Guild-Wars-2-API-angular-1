@@ -1,0 +1,295 @@
+﻿        *{
+            box-sizing:border-box;
+            
+        }
+
+        body{
+           /* background:url('https://images2.alphacoders.com/463/463542.jpg');*/
+           background-color:white;
+            background-size:100%;
+            background-attachment:fixed;
+            margin:0px;
+            font-family: 'Jockey One', sans-serif;
+
+
+
+        }
+
+        html, body{
+
+            height:100%;
+        }
+            /*#####################*/
+              /*# główny holder # */
+            /*#####################*/
+        .pageHolder{
+            height:100%;
+        }
+
+            /*#####################*/
+           /*# Boxy achievementów # */
+            /*#####################*/
+
+        .singleAchievementSection {
+     
+        }
+
+        .single_achievement{
+
+            padding:10px;
+            margin:10px;
+
+            width:500px; 
+            font-size:13px;
+            position:relative;
+            box-shadow:1px 1px 5px black;
+        }
+        .all_achievements{
+            display:flex; 
+            justify-content:space-around;
+            flex-wrap:wrap;
+
+        }
+
+        .AchievementName{
+           float:right;
+           right:2px;
+           position:relative;
+
+           color:white;
+           letter-spacing:1px;  
+           font-size:20px;
+        }
+
+        /*Progrress bar*/
+        meter{
+        background:none;
+        background-color:rgb(235,225,223);
+        height:16px;
+        width:130px;
+        border-radius:10px;
+        box-shadow:1px 1px 1px black;
+
+
+        }
+        meter::-moz-meter-bar{
+         background:none;
+         background-color:rgb(170,150,126);
+         border-radius:10px;
+        }
+    
+        #meter_holder{
+         display:inline;
+      
+        }
+         #meter_holder>span{
+           position:absolute;
+           text-align:center;
+           width:130px;
+           font-size:15px;
+           color:black;
+         }
+         #meter_holder>.AchievementTiersProggress{
+             width:40px;
+         }
+         
+         /*Achievement reward*/
+         #reward_holder{
+             background-color:rgba(51,46,40,0.5);
+             border:1px rgba(255,255,255,0.33) solid;
+             height:100px;
+
+            left: 150px;
+            position: relative;
+            width: 70%;
+         }
+
+
+        #reward_holder>#item_icon_holder{
+            width:50px;
+            border:2px black solid;
+            float:right;
+            position:relative;
+            margin:3px;
+        }
+
+        #reward_holder>#item_name{
+            padding:10px;
+        }
+
+        #reward_holder>span>img, .smallIconInfo{
+            width:17px;
+            vertical-align:bottom;
+    
+        }
+         /*Achievement description*/
+        .moreInfoAchievement{
+            display:none;
+            left:20px;
+            top:10px;
+            position:absolute;
+            text-align:left;
+            letter-spacing:1px;
+            color:white;
+            width:93%;
+        }
+        .moreInfoAchievement>.requirement{
+            color:orange;
+            position:absolute;
+            letter-spacing:1px;
+
+        }
+        
+            /*#####################*/
+                /*# MENU # */
+            /*#####################*/
+        .lista_kategorii{
+
+        }
+
+        .lista_grup_kategorii>li{
+          display:inline-block;
+          width:300px;
+          border:1px black solid;
+          margin:2px;
+        }
+		 .lista_grup_kategorii>li>img{
+        	width:15%;
+		  }
+  	     .lista_grup_kategorii>li>span{
+       		font-size:13px; 
+        	vertical-align:top;
+      }
+
+      .lista_grup_kategorii>li>ul{
+       position:absolute;
+        background-color:brown;
+        border:1px black solid;
+      }
+
+
+      #achievements_categories_submenu{
+  	    list-style-type:none;
+        padding:0px;
+        padding-left:20px;
+      }
+  
+      #achievements_categories_submenu>li>span{
+        text-align:center;
+        vertical-align:top;
+        margin-top:5px;
+        display:inline-block;
+  
+      }
+      #achievements_categories_submenu>li>img{
+        width:35px;
+        vertical-align:bottom;
+      }
+
+            /*#####################*/
+             /*# LEFT PANEL # */
+            /*#####################*/
+
+      .left_panel{
+  	    width:100%;
+
+        padding:5px;
+
+        position:relative;
+        width:300px;
+        height:100%;
+        min-height:100px;
+        float:left;
+
+        font-size:15px;
+
+        background-color:black;
+      }
+      .left_panel>.single_panel{
+        background-color:rgba(255,2555,255,0.3);
+        border:1px black solid;
+        margin-top:15px;
+        padding:6px;
+      }
+            /*#####################*/
+             /*# SORT    PANEL # */
+            /*#####################*/
+      .arrowSort:hover{
+          cursor:pointer;
+      }
+            /*#####################*/
+                /*# WSPÓLNE # */
+            /*#####################*/
+        .lista_grup_kategorii>li,.single_achievement, .achievementInfoHeaderTable{
+            background-color:rgb(85,146,198);
+        }
+
+        .AchievementMoreHiddenInfo, .AchievementCategoryIcon, .AchievementName, .AchievementEntireProggress, .rightInfoPercent, 
+        .AchievementTiersProggress, .AchievementCurrenTierPercent, .AchievementPoints, .AchievementReward{
+            position:relative;
+        }
+            /*#####################*/
+                /*# INNE # */
+            /*#####################*/
+        #item_icon_holder{
+            width:50px;
+            border:2px black solid;
+        }
+
+        #smallInfoButon{
+            width:15px;
+            float:right;
+
+        }
+
+      #smallInfoButon+div{
+        display:none;
+      }
+
+      .showAchievementHiddenInfo{
+        display:block !important;
+        background-color:rgba(0,0,0,0.9);
+        padding:5px;
+        font-size:13px;
+    
+        position:absolute;
+        right:40px;
+
+    	color:white;
+
+      }
+
+      .AchievementMoreHiddenInfo{
+        z-index:200;
+      }
+/* STYLE POTRZEBNE DO ANGULARA */
+      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+      /*repeat-animation?*/
+
+.repeat-animation {
+  -webkit-transition:0.2s linear all;
+  transition:0.2s linear all;
+  position:relative;
+  left:50px;
+}
+.repeat-animation.ng-enter-stagger {
+  -webkit-transition-delay:0.05s;
+  transition-delay:0.05s;
+  -webkit-transition-duration:0;
+  transition-duration:0;
+}
+.repeat-animation.ng-enter { opacity:0; }
+.repeat-animation.left.ng-enter { left:0px; }
+.repeat-animation.right.ng-enter { left:100px; }
+.repeat-animation.ng-enter-active { opacity:1; left:50px; }
+
+/* ozdobne */
+  .lineSeparator{
+  	border-bottom:2px white solid;
+  	width:auto;
+  }
+
+/* box z prawej */

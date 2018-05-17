@@ -1,0 +1,104 @@
+﻿/*//------------------------------------------------------------------------------------------------\\
+//                                  Górne MENU                                                      \\
+//--------------------------------------------------------------------------------------------------\\*/
+
+ ul>li{
+    position:relative;
+}
+
+.upperMenu > ul {
+    position: relative;
+
+    top:-10px;
+}
+
+.upperMenu > ul > li {
+    list-style-type: none;
+    display: inline;
+}
+
+.upperMenu > ul > li + li {
+    margin-left: 30px;
+}
+
+.upperMenu > ul > li > span {
+    font-size: 18px;
+    border-bottom:3px rgba(85,146,198,0.7) solid;
+    border-radius:2px;
+    letter-spacing:1px;
+}
+
+.upperMenu>ul>li>.subMenu{
+    display:none;
+    background-color:rgb(68,96,119);
+    position:absolute;
+
+    z-index:6;
+    left:0px;
+
+    list-style-type:none;
+    box-shadow:1px 1px 5px black;
+
+    margin:0px;
+    padding:0px;
+}
+.subMenu{
+    z-index:7;
+}
+
+.subMenu, .subMenu>li{
+    width:150px;
+}
+
+.subMenu>li{
+    border-bottom:1px black solid;
+}
+
+.subMenu>li>span{
+    margin-left:20px;
+}
+
+.subMenu>li>span:hover{
+    cursor:pointer;
+    opacity:0.8;
+}
+
+/*
+//--------------------------------------------------\\
+//                   Inputy w menu                  \\
+//--------------------------------------------------\\
+*/
+
+.achievementAmountMenu input{
+    width:100px;
+}
+
+/*//------------------------------------------------------------------------------------------------\\
+//                                Tooltip MENU                                                      \\
+//--------------------------------------------------------------------------------------------------\\*/
+.tolltipMenu {
+    overflow: hidden;
+}
+
+.miniBox{
+    float:right;
+    position:relative;
+    right:0px;
+    width:110px;
+    box-shadow: 1px 1px 3px black;
+    right:-70px;
+
+}
+
+.boxIcon{
+    font-weight:bold;
+    position: relative;
+    float:left;
+}
+
+.miniBox-info{
+    text-align:right;
+
+    padding:5px;
+
+}
